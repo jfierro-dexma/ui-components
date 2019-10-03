@@ -19,6 +19,7 @@ import SwitchPeriodComparative from 'components/SwitchPeriodComparative';
 import Table from 'components/Table';
 import Theme from 'components/Theme';
 import Title from 'components/Title';
+import Toast from 'src/components/ToastProvider';
 
 import 'styles/global.scss';
 
@@ -56,6 +57,7 @@ export {
   Spinner,
   SwitchPeriodComparative,
   Table,
+  Toast,
   Theme,
   Title,
   ISO_FORMAT,
