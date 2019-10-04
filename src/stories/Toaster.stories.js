@@ -1,29 +1,29 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ToastProvider, { ToastContext } from 'components/ToastProvider';
+import Toaster, { ToasterContext } from 'components/Toaster';
 import Cell from 'components/Cell';
 import { Sizes } from 'config/foundation';
 import Button from 'components/Button';
 
-storiesOf('ToastProvider', module)
+storiesOf('Toaster', module)
   .addParameters({
-    jest: ['ToastProvider'],
+    jest: ['Toaster'],
   })
   .add('basic', () => (
-    <ToastProvider>
+    <Toaster>
       <Cell medium={2}>
-        <ToastContext.Consumer>
+        <ToasterContext.Consumer>
           {context => (
             <Button
               size={Sizes[1]}
               text="Toast me!"
               onClick={() => {
-                context.showToast('it woooorks!!!');
+                context.toast('it woooorks!!!');
               }}
             />
           )}
-        </ToastContext.Consumer>
+        </ToasterContext.Consumer>
       </Cell>
-    </ToastProvider>
+    </Toaster>
   ));

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import ToastProvider from 'components/ToastProvider';
+import Toaster from 'components/Toaster';
 
-describe('<ToastProvider>', () => {
+describe('<Toaster>', () => {
   it('Should pass', () => {
     expect(1).toEqual(1);
   });

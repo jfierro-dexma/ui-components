@@ -6,7 +6,7 @@ import { withTheme } from 'styled-components';
 import theme from 'styles/theme';
 import { StyledToast } from 'styles/components/StyledToast';
 
-export const ToastContext = React.createContext();
+export const ToasterContext = React.createContext();
 
 const propTypes = {
   theme: PropTypes.shape({}),
@@ -17,7 +17,7 @@ const defaultProps = {
   theme: theme,
 };
 
-const ToastProvider = props => {
+const Toaster = props => {
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState('');
 
@@ -35,17 +35,17 @@ const ToastProvider = props => {
   };
 
   return (
-    <ToastContext.Provider value={{ showToast: showToast }}>
+    <ToasterContext.Provider value={{ toast: showToast }}>
       <React.Fragment>
         <div>{props.children}</div>
         {visible && <Toast {...props} text={text} />}
       </React.Fragment>
-    </ToastContext.Provider>
+    </ToasterContext.Provider>
   );
 };
 
-ToastProvider.propTypes = propTypes;
-ToastProvider.defaultProps = defaultProps;
+Toaster.propTypes = propTypes;
+Toaster.defaultProps = defaultProps;
 
 const toastPropTypes = {
   text: PropTypes.string.isRequired,
@@ -71,4 +71,4 @@ StyledToast.displayName = 'StyledToast';
 Toast.propTypes = toastPropTypes;
 Toast.defaultProps = toastDefaultProps;
 
-export default memo(withTheme(ToastProvider));
+export default memo(withTheme(Toaster));
