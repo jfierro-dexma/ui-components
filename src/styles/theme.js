@@ -16,6 +16,9 @@ export const gray300 = '#a0a0a0';
 export const gray400 = '#888888';
 export const gray500 = '#666666';
 export const gray600 = '#333333';
+export const successColor = '#00C7B4';
+export const warningColor = '#EDA500';
+export const errorColor = '#C23564';
 
 // Font
 export const fontSizeNumber = 0.85;
@@ -76,6 +79,11 @@ const global = {
   backgroundColorActive: backgroundColorActive,
   backgroundColorHover: backgroundColorHover,
   backgroundColorFocused: backgroundColorFocused,
+
+  gray300: gray300,
+  successColor: successColor,
+  warningColor: warningColor,
+  errorColor: errorColor,
 };
 
 // 2. Component

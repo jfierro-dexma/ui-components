@@ -1,7 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Toaster, { ToasterContext } from 'components/Toaster';
+import Toaster, {
+  ToasterContext,
+  ToastConfig,
+  ToastType,
+} from 'components/Toaster';
+import Grid from 'components/Grid';
 import Cell from 'components/Cell';
 import { Sizes } from 'config/foundation';
 import Button from 'components/Button';
@@ -12,18 +17,66 @@ storiesOf('Toaster', module)
   })
   .add('basic', () => (
     <Toaster>
-      <Cell medium={2}>
-        <ToasterContext.Consumer>
-          {context => (
-            <Button
-              size={Sizes[1]}
-              text="Toast me!"
-              onClick={() => {
-                context.toast('it woooorks!!!');
-              }}
-            />
-          )}
-        </ToasterContext.Consumer>
-      </Cell>
+      <Grid type="vertical" horizontalPadding verticalPadding>
+        <Cell
+          medium={2}
+          style={{ height: '200px', backgroundColor: 'cornsilk' }}
+        >
+          <ToasterContext.Consumer>
+            {context => (
+              <React.Fragment>
+                <Button
+                  size={Sizes[1]}
+                  text="INFO"
+                  onClick={() => {
+                    context.toast(
+                      new ToastConfig(
+                        'it woooorks!!! but now I want to try a bigger toast with a long long long long long long text :)',
+                        ToastType.INFO
+                      )
+                    );
+                  }}
+                />
+                <Button
+                  size={Sizes[1]}
+                  text="SUCCESS"
+                  onClick={() => {
+                    context.toast(
+                      new ToastConfig(
+                        'Success!!! but now I want to try a bigger toast with a long long long long long long text :)',
+                        ToastType.SUCCESS
+                      )
+                    );
+                  }}
+                />
+                <Button
+                  size={Sizes[1]}
+                  text="WARNING"
+                  onClick={() => {
+                    context.toast(
+                      new ToastConfig(
+                        'Warning!!! but now I want to try a bigger toast with a long long long long long long text :)',
+                        ToastType.WARNING
+                      )
+                    );
+                  }}
+                />
+                <Button
+                  size={Sizes[1]}
+                  text="ERROR"
+                  onClick={() => {
+                    context.toast(
+                      new ToastConfig(
+                        'ERROR!!! but now I want to try a bigger toast with a long long long long long long text :)',
+                        ToastType.ERROR
+                      )
+                    );
+                  }}
+                />
+              </React.Fragment>
+            )}
+          </ToasterContext.Consumer>
+        </Cell>
+      </Grid>
     </Toaster>
   ));
