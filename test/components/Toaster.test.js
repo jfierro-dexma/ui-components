@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Toaster, { ToasterContext, ToastConfig, ToastType } from 'components/Toaster';
+import Toaster, { ToasterContext, ToastType } from 'components/Toaster';
 
 describe('<Toaster>', () => {
   it('Should render a toast element when call toast', () => {
@@ -13,7 +13,7 @@ describe('<Toaster>', () => {
         </ToasterContext.Consumer>
       </Toaster>
         );
-    toastFunction(new ToastConfig('some alert', ToastType.INFO));
+    toastFunction({ text: 'some alert', type: ToastType.INFO });
     toaster.update();
     expect(toaster.find('.toast').length).toEqual(1);
   });
@@ -36,7 +36,7 @@ describe('<Toaster>', () => {
         </ToasterContext.Consumer>
       </Toaster>
     );
-    toastFunction(new ToastConfig('expected text', ToastType.ERROR));
+    toastFunction({ text: 'expected text', type: ToastType.ERROR });
     toaster.update();
     expect(toaster.text()).toEqual('expected text');
   });

@@ -3,27 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withTheme } from 'styled-components';
 
-import { assert } from 'utils/assert';
 import theme from 'styles/theme';
 import { StyledToast } from 'styles/components/StyledToast';
 import Icon from 'components/Icon';
-
-export const ToastType = Object.freeze({
-  INFO: 'INFO',
-  SUCCESS: 'SUCCESS',
-  WARNING: 'WARNING',
-  ERROR: 'ERROR',
-});
-
-export class ToastConfig {
-  constructor(text, type) {
-    assert(typeof text === 'string');
-    assert(type in ToastType);
-
-    this.text = text;
-    this.type = type;
-  }
-}
 
 export const ToasterContext = React.createContext();
 
@@ -38,13 +20,11 @@ const defaultProps = {
 
 const Toaster = props => {
   const [visible, setVisible] = useState(false);
-  const [toastConfig, setToastConfig] = useState(
-    new ToastConfig('', ToastType.INFO)
-  );
+  const [toastConfig, setToastConfig] = useState({});
   const [toastTimeout, setToastTimeout] = useState(null);
 
-  const showToast = toastConfig => {
-    setToastConfig(toastConfig);
+  const showToast = ({ text, type }) => {
+    setToastConfig({ text: text, type: type });
     setVisible(true);
     clearTimeout(toastTimeout);
     setToastTimeout(
@@ -58,7 +38,7 @@ const Toaster = props => {
     <ToasterContext.Provider value={{ toast: showToast }}>
       <React.Fragment>
         <div>{props.children}</div>
-        {visible && <Toast {...props} toastConfig={toastConfig} />}
+        {visible && <Toast {...props} {...toastConfig} />}
       </React.Fragment>
     </ToasterContext.Provider>
   );
@@ -67,30 +47,37 @@ const Toaster = props => {
 Toaster.propTypes = propTypes;
 Toaster.defaultProps = defaultProps;
 
+export const ToastType = Object.freeze({
+  INFO: 'INFO',
+  SUCCESS: 'SUCCESS',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+});
+
 const toastPropTypes = {
-  toastConfig: PropTypes.shape({}).isRequired,
   theme: PropTypes.shape({}),
+  text: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(Object.keys(ToastType)).isRequired,
 };
 
 const toastDefaultProps = {
-  toastConfig: new ToastConfig('Default text error!', ToastType.ERROR),
   theme: theme,
 };
 
-const Toast = ({ toastConfig, theme }) => {
-  const classes = classNames('toast', toastConfig.type.toLowerCase());
+const Toast = ({ text, type, theme }) => {
+  const classes = classNames('toast', type.toLowerCase());
   const iconName = {
     [ToastType.INFO]: 'info-button',
     [ToastType.SUCCESS]: 'ok-circled',
     [ToastType.WARNING]: 'attention',
     [ToastType.ERROR]: 'attention-circled',
-  }[toastConfig.type];
+  }[type];
 
   return (
     <StyledToast theme={theme}>
       <div className={classes}>
         <Icon name={iconName} size="medium" />
-        <span>{toastConfig.text}</span>
+        <span>{text}</span>
       </div>
     </StyledToast>
   );
